@@ -7,7 +7,6 @@ openai
 python-dotenv
 gunicorn
 opencv-python-headless
-autotrace-python
 numpy
 pytesseract
 vtracer

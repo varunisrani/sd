@@ -9,4 +9,4 @@ gunicorn
 opencv-python-headless
 numpy
 pytesseract
-vtracer
+vtracer=0.6.11

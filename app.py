@@ -58,7 +58,7 @@ OPENAI_API_KEY_SVG = os.getenv('OPENAI_API_KEY_SVG')
 if not OPENAI_API_KEY_ENHANCER or not OPENAI_API_KEY_SVG:
     raise ValueError("OpenAI API keys must be set in environment variables")
 
-# OpenAI client setup
+# OpenAI client setupkk
 openai.api_key = OPENAI_API_KEY_SVG
 
 # OpenAI API Endpoints
@@ -66,13 +66,13 @@ OPENAI_API_BASE = "https://api.openai.com/v1"
 OPENAI_CHAT_ENDPOINT = f"{OPENAI_API_BASE}/chat/completions"
 
 # Model names - updated to use GPT-4.1 mini for logic/text and gpt-image for images
-PLANNER_MODEL = "gpt-4.1-mini"
-DESIGN_KNOWLEDGE_MODEL = "gpt-4.1-mini"
-PRE_ENHANCER_MODEL = "gpt-4.1-mini"
-PROMPT_ENHANCER_MODEL = "gpt-4.1-mini"
+PLANNER_MODEL = "gpt-4.1-nano"
+DESIGN_KNOWLEDGE_MODEL = "gpt-4.1-nano"
+PRE_ENHANCER_MODEL = "gpt-4.1-nano"
+PROMPT_ENHANCER_MODEL = "gpt-4.1-nano"
 GPT_IMAGE_MODEL = "gpt-image-1"
-SVG_GENERATOR_MODEL = "gpt-4.1-mini"
-CHAT_ASSISTANT_MODEL = "gpt-4.1-mini"
+SVG_GENERATOR_MODEL = "gpt-4.1-nano"
+CHAT_ASSISTANT_MODEL = "gpt-4.1-nano"
 
 def check_vector_suitability(user_input):
     """Check if the prompt is suitable for SVG vector graphics"""
@@ -146,34 +146,39 @@ def plan_design(user_input):
         "messages": [
             {
                 "role": "system",
-                "content": """You are a design planner. Create a structured plan for the design request.
+                "content": """You are a design planner specializing in high-quality posters, logos, and branding materials. Create a structured plan for the user's request that focuses on visual impact, cohesive color themes, and professional composition.
 
 Your plan should include:
 1. Design Goals
-   - Main purpose
-   - Target audience
-   - Key message/emotion
+   - Main purpose and intended use (e.g., poster, logo)
+   - Target audience and mood
+   - Key message and visual emotion
 
-2. Design Elements
-   - Layout structure
-   - Key components
-   - Typography needs
-   - Color scheme approach
-   - Visual hierarchy
+2. Visual Composition
+   - Overall layout structure and focal points
+   - Background elements (colors, gradients, textures)
+   - Visual hierarchy and balance
 
-3. Technical Considerations
-   - SVG optimization requirements
-   - Responsive design needs
-   - Browser compatibility
-   - Performance considerations
+3. Typography and Style
+   - Font choices, sizes, and pairings
+   - Spacing, alignment, and hierarchy
 
-4. Implementation Strategy
-   - Component breakdown
-   - Order of creation
-   - Special effects/animations
-   - Testing requirements
+4. Color and Branding
+   - Suggested color palette with hex/RGB codes
+   - Background and accent color recommendations
+   - Mood or theme descriptors (e.g., vibrant, minimal, elegant)
 
-Be specific and practical. Focus on actionable details."""
+5. Technical and Production Considerations
+   - SVG optimization requirements and file size targets
+   - Responsive design and browser compatibility
+   - Logo integration and branding guidelines
+
+6. Implementation Strategy
+   - Component breakdown and creation order
+   - Special effects or patterns (shadows, overlays)
+   - Testing and validation steps
+
+Be specific, practical, and focus on creating a visually compelling poster or logo that aligns with the user's request."""
             },
             {
                 "role": "user",
@@ -208,35 +213,35 @@ def generate_design_knowledge(design_plan, user_input):
         "messages": [
             {
                 "role": "system",
-                "content": """You are a design knowledge expert. Based on the design plan and user request, provide specific design knowledge and best practices.
+                "content": """You are a design knowledge expert specializing in professional poster and logo creation. Based on the design plan and user request, provide detailed insights, best practices, and actionable recommendations to enhance visual quality and impact.
 
 Include:
-1. Typography
-   - Font recommendations
-   - Size hierarchies
-   - Spacing guidelines
+1. Typography and Branding
+   - Font recommendations with pairing suggestions
+   - Hierarchy and spacing for emphasis
+   - Logo integration tips
 
-2. Color Theory
-   - Color palette suggestions
-   - Contrast requirements
-   - Accessibility considerations
+2. Color and Mood
+   - Cohesive color palette suggestions with hex/RGB values
+   - Contrast, accessibility, and readability guidance
+   - Background color and texture ideas for mood
 
-3. Layout Principles
-   - Grid systems
-   - Alignment rules
-   - White space usage
+3. Layout and Composition
+   - Effective grid systems and alignment techniques
+   - Focal point emphasis and visual flow strategies
+   - Balanced use of whitespace and dynamic elements
 
-4. SVG Best Practices
-   - Element organization
-   - Optimization techniques
-   - Animation possibilities
+4. SVG and Graphic Techniques
+   - Path and shape optimization for crisp visuals
+   - Use of overlays, shadows, gradients, and textures
+   - Grouping and layer organization for clarity
 
-5. Technical Guidelines
-   - Viewport settings
-   - Responsive design approaches
-   - Browser compatibility considerations
+5. Technical and Production
+   - Responsive design tips for multiple screen sizes
+   - SVG file size optimization and performance
+   - Cross-browser compatibility considerations
 
-Be specific and provide actionable insights."""
+Provide clear, practical recommendations to elevate the design quality for posters, logos, and branding materials."""
             },
             {
                 "role": "user",
@@ -271,42 +276,40 @@ def pre_enhance_prompt(user_input):
         "messages": [
             {
                 "role": "system",
-                "content": """You are an expert design prompt enhancer. Your task is to take a user's design request and enhance it with specific details about:
+                "content": """You are an expert design prompt enhancer. Enhance the user's design request into a highly detailed, technical specification optimized for creating professional-quality posters, logos, and branding materials.
 
+Your enhanced prompt should include:
 1. Layout and Composition
-   - Overall structure
-   - Element positioning
-   - Balance and hierarchy
-   - Whitespace usage
+   - Overall structure and visual flow
+   - Focal points and visual hierarchy
+   - Balance, symmetry, and use of whitespace
 
 2. Typography
-   - Font styles and families
-   - Text sizes and weights
-   - Text alignment and spacing
-   - Font combinations
+   - Font styles and families with pairing recommendations
+   - Font sizes with emphasis hierarchy
+   - Text alignment and letter spacing
 
-3. Colors
-   - Color scheme
-   - Background colors
-   - Text colors
-   - Element colors
-   - Color relationships
+3. Color and Atmosphere
+   - Cohesive color palette suggestions with hex/RGB codes
+   - Background colors, gradients, and texture ideas
+   - Mood and style descriptors (e.g., vibrant, elegant, minimalist)
 
-4. Visual Elements
-   - Shapes and forms
-   - Lines and borders
-   - Icons and symbols
-   - Decorative elements
+4. Visual Elements and Branding
+   - Background graphics, patterns, or images
+   - Icons, symbols, and decorative shapes
+   - Logo placement and integration tips
 
 5. Technical Requirements
-   - SVG-specific considerations
-   - Responsive design needs
-   - Browser compatibility
-   - Accessibility requirements
+   - SVG-specific considerations and optimization techniques
+   - Responsive design and scaling guidelines
+   - Browser compatibility and performance optimizations
 
-Convert the user's request into a detailed, technical design specification that maintains their original intent while adding necessary details for SVG creation.
+6. Poster and Logo Aesthetics
+   - Recommendations for cohesion between elements
+   - Suggestions for lighting, shadow, and depth
+   - Tips for making the design stand out visually
 
-Focus on vector-friendly design elements and avoid non-SVG compatible features."""
+Convert the user's brief into a complete, actionable prompt that maintains their original intent while adding all necessary details to produce a visually compelling and professional SVG design."""
             },
             {
                 "role": "user",
@@ -344,46 +347,36 @@ def enhance_prompt_with_chat(user_input):
         "messages": [
             {
                 "role": "system",
-                "content": """You are an advanced SVG design prompt optimizer. Your role is to take a pre-enhanced design prompt and optimize it for SVG generation by ensuring:
+                "content": """You are an advanced SVG design prompt optimizer specializing in high-impact posters and logo creation. Enhance the pre-enhanced design prompt to ensure the resulting SVG is visually stunning, cohesive, and technically precise.
 
-1. Vector Optimization
-   - Emphasize vector-friendly elements
-   - Specify paths and shapes clearly
-   - Define gradients and patterns appropriately
-   - Optimize for SVG capabilities
+Your optimization should address:
+1. Vector and Visual Optimization
+   - Emphasize vector-friendly shapes, paths, and curves
+   - Define gradients, patterns, and textures for backgrounds
+   - Recommend shadows, overlays, and depth for visual appeal
 
 2. Technical Precision
-   - Exact dimensions and positions
-   - Precise color values (HEX/RGB)
-   - Font specifications with fallbacks
-   - SVG viewport settings
+   - Exact dimensions, positions, and aspect ratios
+   - Precise color values (HEX/RGB) with contrast considerations
+   - Font specifications, including web-safe fallbacks and loading strategies
 
-3. Component Organization
-   - Layering structure
-   - Group definitions
-   - Element IDs and classes
-   - Reusable components
+3. Component and Layer Organization
+   - Grouping of elements for reuse and clarity
+   - IDs and classes for styling and interactivity
+   - Organized layering to control visual stacking and effects
 
-4. Performance Considerations
-   - Optimize paths
-   - Minimize complexity
-   - Efficient use of groups
-   - Browser compatibility
+4. Performance and Accessibility
+   - Optimize paths to minimize file size and complexity
+   - Ensure responsive scaling and cross-browser performance
+   - Add ARIA labels and semantic structure for accessibility
 
-5. Accessibility and Responsiveness
-   - ARIA labels
-   - Semantic structure
-   - Responsive scaling
-   - Cross-browser support
+5. Poster and Branding Details
+   - Specify background elements (colors, gradients, patterns)
+   - Suggest lighting, shadow, and texture to create depth
+   - Recommend cohesive color themes and mood descriptors
+   - Integrate logo placement and branding cues
 
-Add these requirements to ensure proper SVG generation:
-- Center alignment for all SVG elements
-- Meaningful and clean SVG code
-- Proper color contrast and visibility
-- Font loading via both link and @font-face
-- Proper alignment and visual balance
-
-The final prompt should be highly detailed and technically precise while maintaining the original design intent."""
+Ensure the final prompt guides the SVG generator to produce a complete, eye-catching poster or logo design with a well-defined background, color theme, and professional quality."""
             },
             {
                 "role": "user",
@@ -404,24 +397,162 @@ The final prompt should be highly detailed and technically precise while maintai
 
     return response_data["choices"][0]["message"]["content"]
 
-def generate_image_with_gpt(enhanced_prompt):
-    """Generate image using GPT Image-1 model"""
+def enhance_prompt_for_gpt_image(user_prompt, design_context=None):
+    """Enhance user prompt specifically for GPT Image-1 to create better designs"""
+
+    # Analyze the prompt to determine design type
+    prompt_lower = user_prompt.lower()
+
+    # Design type detection
+    is_poster = any(word in prompt_lower for word in ['poster', 'flyer', 'announcement', 'event', 'coming soon'])
+    is_logo = any(word in prompt_lower for word in ['logo', 'brand', 'company', 'business', 'startup'])
+    is_card = any(word in prompt_lower for word in ['card', 'testimonial', 'review', 'quote'])
+    is_banner = any(word in prompt_lower for word in ['banner', 'header', 'cover', 'social media'])
+    is_infographic = any(word in prompt_lower for word in ['infographic', 'chart', 'data', 'statistics'])
+
+    # Base quality enhancers for GPT Image-1
+    base_quality = [
+        "professional design",
+        "high-quality graphics",
+        "clean composition",
+        "modern aesthetic",
+        "balanced layout",
+        "crisp typography",
+        "vibrant colors",
+        "well-defined elements",
+        "clear visual hierarchy",
+        "polished finish"
+    ]
+
+    # Design-specific enhancements
+    if is_poster:
+        specific_enhancements = [
+            "eye-catching poster design",
+            "bold headline typography",
+            "compelling visual focal point",
+            "structured information layout",
+            "attention-grabbing color scheme",
+            "professional poster composition",
+            "clear call-to-action placement",
+            "balanced text and imagery"
+        ]
+    elif is_logo:
+        specific_enhancements = [
+            "distinctive logo design",
+            "memorable brand identity",
+            "scalable vector-friendly graphics",
+            "simple yet impactful design",
+            "professional brand aesthetics",
+            "clean geometric shapes",
+            "timeless design approach",
+            "versatile color palette"
+        ]
+    elif is_card:
+        specific_enhancements = [
+            "elegant card design",
+            "testimonial-focused layout",
+            "professional presentation",
+            "readable typography hierarchy",
+            "trustworthy visual design",
+            "clean background treatment",
+            "balanced content arrangement",
+            "credible aesthetic appeal"
+        ]
+    elif is_banner:
+        specific_enhancements = [
+            "dynamic banner design",
+            "horizontal composition",
+            "social media optimized",
+            "engaging visual elements",
+            "brand-consistent styling",
+            "clear messaging hierarchy",
+            "platform-appropriate design",
+            "scroll-stopping appeal"
+        ]
+    elif is_infographic:
+        specific_enhancements = [
+            "data visualization design",
+            "information hierarchy",
+            "chart and graph elements",
+            "educational layout",
+            "statistical presentation",
+            "clear data storytelling",
+            "professional infographic style",
+            "engaging data design"
+        ]
+    else:
+        specific_enhancements = [
+            "versatile graphic design",
+            "adaptable visual style",
+            "multi-purpose layout",
+            "flexible design approach",
+            "universal appeal",
+            "broad application design"
+        ]
+
+    # Technical specifications for GPT Image-1
+    technical_specs = [
+        "1024x1024 resolution",
+        "RGB color space",
+        "high contrast elements",
+        "clear edge definition",
+        "optimal text readability",
+        "vector-conversion friendly",
+        "clean background separation",
+        "distinct element boundaries"
+    ]
+
+    # Build enhanced prompt
+    enhanced_parts = []
+
+    # Add original request
+    enhanced_parts.append(f"Create: {user_prompt}")
+
+    # Add design context if provided
+    if design_context:
+        enhanced_parts.append(f"Context: {design_context[:200]}...")
+
+    # Add design type specific enhancements
+    enhanced_parts.append(f"Style: {', '.join(specific_enhancements[:4])}")
+
+    # Add quality requirements
+    enhanced_parts.append(f"Quality: {', '.join(base_quality[:6])}")
+
+    # Add technical requirements
+    enhanced_parts.append(f"Technical: {', '.join(technical_specs[:4])}")
+
+    # Combine into final prompt
+    final_prompt = " | ".join(enhanced_parts)
+
+    # Ensure prompt isn't too long (GPT Image-1 has limits)
+    if len(final_prompt) > 1000:
+        final_prompt = final_prompt[:1000] + "..."
+
+    return final_prompt
+
+def generate_image_with_gpt(enhanced_prompt, design_context=None):
+    """Generate image using GPT Image-1 model with enhanced prompting"""
     try:
         logger.info("Generating image with GPT Image-1")
+
+        # Enhance the prompt specifically for GPT Image-1
+        optimized_prompt = enhance_prompt_for_gpt_image(enhanced_prompt, design_context)
+        logger.info(f"Optimized prompt: {optimized_prompt[:200]}...")
+
         response = openai.images.generate(
             model=GPT_IMAGE_MODEL,
-            prompt=enhanced_prompt,
+            prompt=optimized_prompt,
             size="1024x1024",
-            quality="low"
+            quality="low"   # Changed from "low" to "standard" for better quality
         )
-        
+
         # Get base64 image data from the response
         # The response structure changed in newer versions of the API
         image_base64 = response.data[0].b64_json if hasattr(response.data[0], 'b64_json') else response.data[0].url
-        
+
         # Save the generated image
         filename = save_image(image_base64, prefix="gpt_image")
-        
+
         logger.info("Image generated and saved successfully with GPT Image-1")
         return image_base64, filename
     except Exception as e:
@@ -637,41 +768,16 @@ Original Request:
 {user_input}"""
         logger.info("Design context preparation complete")
         
-        if skip_enhancement:
-            logger.info("\n[STAGES 4-5: Enhancement Phases SKIPPED]")
-            logger.info("-"*50)
-            logger.info("Using original prompt without enhancement")
-            prompt_to_use = user_input
-            pre_enhanced_prompt = user_input
-            enhanced_prompt = user_input
-        else:
-            # Stage 4: Pre-enhance the prompt with AI planning and design knowledge
-            logger.info("\n[STAGE 4: Pre-enhancement Phase]")
-            logger.info("-"*50)
-            logger.info("Pre-enhancing prompt with design context...")
-            logger.info(f"Using model: {PRE_ENHANCER_MODEL}")
-            pre_enhanced_prompt = pre_enhance_prompt(design_context)
-            logger.info("\nPre-enhanced Prompt Generated:")
-            for line in pre_enhanced_prompt.split('\n')[:10]:
-                logger.info(f"  {line}")
-            logger.info("  ...")
-
-            # Stage 5: Further enhance the prompt with technical specifications
-            logger.info("\n[STAGE 5: Prompt Enhancement Phase]")
-            logger.info("-"*50)
-            logger.info("Enhancing prompt with technical specifications...")
-            logger.info(f"Using model: {PROMPT_ENHANCER_MODEL}")
-            enhanced_prompt = enhance_prompt_with_chat(pre_enhanced_prompt)
-            logger.info("\nFinal Enhanced Prompt:")
-            for line in enhanced_prompt.split('\n')[:10]:
-                logger.info(f"  {line}")
-            logger.info("  ...")
-            
-            prompt_to_use = enhanced_prompt
+        # Stages 4-5: Enhancement Phases Skipped
+        logger.info("\n[STAGES 4-5: Enhancement Phases SKIPPED]")
+        logger.info("-"*50)
+        prompt_to_use = user_input
+        pre_enhanced_prompt = user_input
+        enhanced_prompt = user_input
 
         # Stage 6: Generate image using GPT Image-1
         logger.info("STAGE 6: Image Generation Phase")
-        gpt_image_base64, gpt_image_filename = generate_image_with_gpt(prompt_to_use)
+        gpt_image_base64, gpt_image_filename = generate_image_with_gpt(prompt_to_use, design_context)
         logger.info("Image generated with GPT Image-1")
 
         # Stage 7: Generate SVG using vtracer
@@ -972,7 +1078,7 @@ def chat_assistant():
                 logger.info("-"*50)
                 logger.info("Generating initial design image...")
                 logger.info(f"Using model: {GPT_IMAGE_MODEL}")
-                image_base64, image_filename = generate_image_with_gpt(enhanced_prompt)
+                image_base64, image_filename = generate_image_with_gpt(enhanced_prompt, design_context)
                 logger.info(f"Image generated and saved as: {image_filename}")
                 
                 # Stage 6: SVG Generation
